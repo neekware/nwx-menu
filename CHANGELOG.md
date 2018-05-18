@@ -1,3 +1,9 @@
+## 1.0.0
+
+Enhancements:
+
+  - Clean up & release
+
 ## 0.0.2
 
 Enhancements:

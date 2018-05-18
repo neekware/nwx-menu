@@ -42,7 +42,7 @@ export class MenuService {
   ): MenuNode[] {
     const tree: MenuNode[] = [];
     for (const item of itemList) {
-      if (!item.hasOwnProperty('name')) {
+      if (!item.hasOwnProperty('name') || item.name.length < 1) {
         throw Error(`Menu item missing 'name'`);
       }
       const allowed = get(item, 'allowed', true);

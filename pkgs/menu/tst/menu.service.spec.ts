@@ -12,7 +12,7 @@ import { MenuItem } from '../src/menu.types';
 import { MenuModule } from '../src/menu.module';
 import { MenuService } from '../src/menu.service';
 
-export const DefaultMenuTree: MenuItem[] = [
+const DefaultMenuTree: MenuItem[] = [
   {
     name: 'Admin',
     icon: 'wrench',
@@ -74,8 +74,13 @@ export const DefaultMenuTree: MenuItem[] = [
     ]
   },
   {
+    name: 'Change Language',
+    link: '/settings/language',
+  },
+  {
     name: 'Yahoo Finance',
     link: 'https://yahoo.com',
+    external: true,
     disabled: true
   },
   {
@@ -126,7 +131,7 @@ describe('MenuService', () => {
   );
 
   it(
-    'should create menu with permission verification (isAllowed === true)',
+    'should create menu - (isAllowed === true)',
     inject([MenuService], (service: MenuService) => {
       service.setPermissionVerificationFunction(hasPermission);
       const menuTree = service.buildMenuTree(DefaultMenuTree);
@@ -143,7 +148,29 @@ describe('MenuService', () => {
   );
 
   it(
-    'should create menu with permission verification (isAllowed === false)',
+    'should create menu - isActive, isLink, isNode, isFullspan',
+    inject([MenuService], (service: MenuService) => {
+      service.setPermissionVerificationFunction(hasPermission);
+      const menuTree = service.buildMenuTree(DefaultMenuTree);
+      const admin = menuTree.children.filter(node => node.name === 'Admin');
+      expect(admin[0].isNode).toEqual(true);
+      expect(admin[0].isLink).toEqual(false);
+      expect(admin[0].isActive('/admin/accounts/Subscriptions')).toEqual(true);
+      expect(admin[0].isActive('/invalid/node')).toEqual(false);
+
+      const subscriptions = admin[0].children.filter(
+        node => node.name === 'Subscriptions'
+      );
+
+      expect(subscriptions[0].isActive('/admin/accounts/Subscriptions')).toEqual(true);
+      expect(subscriptions[0].isActive('/invalid/link')).toEqual(false);
+      expect(admin[0].isFullspan).toEqual(false);
+      expect(subscriptions[0].isInternalLink).toEqual(true);
+    })
+  );
+
+  it(
+    'should create menu - (isAllowed === false)',
     inject([MenuService], (service: MenuService) => {
       service.setPermissionVerificationFunction(hasPermission);
       const menuTree = service.buildMenuTree(DefaultMenuTree);
@@ -183,7 +210,7 @@ describe('MenuService', () => {
   );
 
   it(
-    'should create menu - offset, node, link ...',
+    'should create menu - offset, node, link, internal, external ...',
     inject([MenuService], (service: MenuService) => {
       service.setPermissionVerificationFunction(hasPermission);
       const menuTree = service.buildMenuTree(DefaultMenuTree);
@@ -193,6 +220,17 @@ describe('MenuService', () => {
       expect(admin[0].isNode).toEqual(false);
       expect(admin[0].isLink).toEqual(true);
       expect(admin[0].hasChildren).toEqual(false);
+      expect(admin[0].isExternalLink).toEqual(true);
+      expect(admin[0].isInternalLink).toEqual(false);
+    })
+  );
+
+  it(
+    'should create menu - empty name ...',
+    inject([MenuService], (service: MenuService) => {
+      expect(() => {
+        service.buildMenuTree([{ name: '' }]);
+      }).toThrow(new Error(`Menu item missing 'name'`));
     })
   );
 });
