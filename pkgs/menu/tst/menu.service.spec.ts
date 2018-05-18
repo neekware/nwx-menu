@@ -75,9 +75,8 @@ export const DefaultMenuTree: MenuItem[] = [
   },
   {
     name: 'Yahoo Finance',
-    icon: 'google-analytics',
     link: 'https://yahoo.com',
-    external: true
+    disabled: true
   },
   {
     name: 'Youtube',
@@ -157,7 +156,7 @@ describe('MenuService', () => {
   );
 
   it(
-    'should create menu with target set to _blank & external',
+    'should create menu with target set to _blank & external, icon',
     inject([MenuService], (service: MenuService) => {
       service.setPermissionVerificationFunction(hasPermission);
       const menuTree = service.buildMenuTree(DefaultMenuTree);
@@ -165,6 +164,21 @@ describe('MenuService', () => {
       expect(admin).toBeTruthy();
       expect(admin[0].target).toEqual('_blank');
       expect(admin[0].external).toEqual(true);
+      expect(admin[0].icon).toEqual('youtube');
+    })
+  );
+
+  it(
+    'should create menu with target set children, allowed, no icons',
+    inject([MenuService], (service: MenuService) => {
+      service.setPermissionVerificationFunction(hasPermission);
+      const menuTree = service.buildMenuTree(DefaultMenuTree);
+      const admin = menuTree.children.filter(node => node.name === 'Yahoo Finance');
+      expect(admin).toBeTruthy();
+      expect(admin[0].allowed).toEqual(true);
+      expect(admin[0].disabled).toEqual(true);
+      expect(admin[0].icon).toEqual(null);
+      expect(admin[0].children.length).toEqual(0);
     })
   );
 });
