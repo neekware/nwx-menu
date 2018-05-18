@@ -92,9 +92,10 @@ export class AppComponent {
   constructor(public cfg: CfgService, public log: LogService, public menu: MenuService) {
     this.title = this.cfg.options.appName;
     this.log.info('AppComponent loaded ...');
+    this.buildMenu();
   }
 
-  checkMenu() {
+  buildMenu() {
     const menuTree = this.menu.buildMenuTree(DefaultMenuTree);
   }
 }
