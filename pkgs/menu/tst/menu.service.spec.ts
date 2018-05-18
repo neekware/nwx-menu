@@ -88,6 +88,21 @@ export const DefaultMenuTree: MenuItem[] = [
   }
 ];
 
+function hasPermission(node: MenuItem) {
+  const menuPerms = node.permissions || [];
+  if (menuPerms.length === 0) {
+    return true;
+  }
+
+  const userPerms = ['admin_finance'];
+  if (menuPerms.length === 0) {
+    return false;
+  }
+
+  const hasPerm = menuPerms.some(value => userPerms.indexOf(value) >= 0);
+  return hasPerm;
+}
+
 describe('MenuService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -108,6 +123,35 @@ describe('MenuService', () => {
       const menuTree = service.buildMenuTree(DefaultMenuTree);
       expect(menuTree.level).toEqual(0);
       expect(menuTree.children[0].level).toEqual(1);
+    })
+  );
+
+  it(
+    'should create menu with permission verification (isAllowed === true)',
+    inject([MenuService], (service: MenuService) => {
+      service.setPermissionVerificationFunction(hasPermission);
+      const menuTree = service.buildMenuTree(DefaultMenuTree);
+      const admin = menuTree.children.filter(node => node.name === 'Admin');
+      expect(admin).toBeTruthy();
+
+      const subscriptions = admin[0].children.filter(
+        node => node.name === 'Subscriptions'
+      );
+      expect(subscriptions.length).toEqual(1);
+      expect(subscriptions[0].link).toBeTruthy('/admin/accounts/Subscriptions');
+    })
+  );
+
+  it(
+    'should create menu with permission verification (isAllowed === false)',
+    inject([MenuService], (service: MenuService) => {
+      service.setPermissionVerificationFunction(hasPermission);
+      const menuTree = service.buildMenuTree(DefaultMenuTree);
+      const admin = menuTree.children.filter(node => node.name === 'Admin');
+      expect(admin).toBeTruthy();
+
+      const subscriptions = admin[0].children.filter(node => node.name === 'Settings');
+      expect(subscriptions.length).toEqual(0);
     })
   );
 });
