@@ -7,41 +7,33 @@ import { MenuService, MenuItem } from 'pkgs/menu';
 
 export const DefaultMenuTree: MenuItem[] = [
   {
-    name: "Admin",
+    name: 'Admin',
     icon: 'wrench',
     permissions: [
-      'admin_root',   // superuser
-      'admin_staff',  // staff
-      'admin_finance',// finance
-      'admin_hr'      // HR
+      'admin_root', // superuser
+      'admin_staff', // staff
+      'admin_finance', // finance
+      'admin_hr' // HR
     ],
     children: [
       {
-        name: "Accounts",
+        name: 'Accounts',
         icon: 'account',
-        link: '/admin/accounts/profile',
+        link: '/admin/accounts/profile'
       },
       {
-        name: "Settings",
+        name: 'Settings',
         icon: 'account-card-details',
         link: '/admin/accounts/settings',
         fullspan: true,
-        permissions: [
-          'admin_root',
-          'admin_staff',
-          'admin_hr'
-        ],
+        permissions: ['admin_root', 'admin_staff', 'admin_hr']
       },
       {
-        name: "Subscriptions",
+        name: 'Subscriptions',
         icon: ' account-multiple-check',
         link: '/admin/accounts/Subscriptions',
         fullspan: true,
-        permissions: [
-          'admin_root',
-          'admin_staff',
-          'admin_finance'
-        ],
+        permissions: ['admin_root', 'admin_staff', 'admin_finance']
       }
     ]
   },
@@ -66,7 +58,7 @@ export const DefaultMenuTree: MenuItem[] = [
     name: 'Yahoo Finance',
     icon: 'google-analytics',
     link: 'https://yahoo.com',
-    external: true,
+    external: true
   },
   {
     name: 'Youtube',

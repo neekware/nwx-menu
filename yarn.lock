@@ -195,18 +195,6 @@
     tree-kill "^1.0.0"
     webpack-sources "^1.1.0"
 
-"@ngx-translate/core@^10.0.1":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/@ngx-translate/core/-/core-10.0.1.tgz#9f3a3ed077e847dd0d2951a664da6ee348a06d22"
-  dependencies:
-    tslib "^1.9.0"
-
-"@ngx-translate/http-loader@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@ngx-translate/http-loader/-/http-loader-3.0.1.tgz#20b0f98bc6c25321129d3e3302ab3cc489c0a42a"
-  dependencies:
-    tslib "^1.9.0"
-
 "@nwx/cfg@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@nwx/cfg/-/cfg-1.0.0.tgz#c8085d0e5229ba3d3d8035db9d891a74e4a24498"
@@ -3490,10 +3478,6 @@ jasminewd2@^2.1.0:
 js-base64@^2.1.8:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.3.tgz#2e545ec2b0f2957f41356510205214e98fad6582"
-
-js-base64@^2.4.5:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.5.tgz#e293cd3c7c82f070d700fc7a1ca0a2e69f101f92"
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
