@@ -156,7 +156,7 @@ describe('MenuService', () => {
   );
 
   it(
-    'should create menu with target set to _blank & external, icon',
+    'should create menu - target & external, icon',
     inject([MenuService], (service: MenuService) => {
       service.setPermissionVerificationFunction(hasPermission);
       const menuTree = service.buildMenuTree(DefaultMenuTree);
@@ -169,7 +169,7 @@ describe('MenuService', () => {
   );
 
   it(
-    'should create menu with target set children, allowed, no icons',
+    'should create menu - children, allowed, no icons',
     inject([MenuService], (service: MenuService) => {
       service.setPermissionVerificationFunction(hasPermission);
       const menuTree = service.buildMenuTree(DefaultMenuTree);
@@ -179,6 +179,20 @@ describe('MenuService', () => {
       expect(admin[0].disabled).toEqual(true);
       expect(admin[0].icon).toEqual(null);
       expect(admin[0].children.length).toEqual(0);
+    })
+  );
+
+  it(
+    'should create menu - offset, node, link ...',
+    inject([MenuService], (service: MenuService) => {
+      service.setPermissionVerificationFunction(hasPermission);
+      const menuTree = service.buildMenuTree(DefaultMenuTree);
+      const admin = menuTree.children.filter(node => node.name === 'Yahoo Finance');
+      expect(admin).toBeTruthy();
+      expect(admin[0].offset(0.9, 'rem')).toEqual('0.9rem');
+      expect(admin[0].isNode).toEqual(false);
+      expect(admin[0].isLink).toEqual(true);
+      expect(admin[0].hasChildren).toEqual(false);
     })
   );
 });
