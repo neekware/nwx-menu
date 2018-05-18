@@ -6,7 +6,7 @@
  * found in the LICENSE file at http://neekware.com/license/MIT.html
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 
 import { get } from 'lodash';
 
@@ -19,6 +19,7 @@ import { MenuModule } from './menu.module';
   providedIn: MenuModule
 })
 export class MenuService {
+  @Output() menuChange$ = new EventEmitter<MenuNode>();
   private _rootNode: MenuNode = new MenuNode({ name: 'root' });
   private _isAllowed: PermissionVerificationFuncType = null;
 
@@ -29,6 +30,7 @@ export class MenuService {
   buildMenuTree(menuItems: MenuItem[], force = false) {
     if (this._rootNode.children.length === 0 || force) {
       this._rootNode.children = this.makeMenuTree(menuItems, null);
+      this.menuChange$.emit(this._rootNode);
     }
     return this._rootNode;
   }
