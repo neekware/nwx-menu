@@ -1,0 +1,10 @@
+{
+  "name": "@nwx/jwt",
+  "description": "A simple JWT module for Angular applications",
+  "peerDependencies": {
+    "@angular/core": "^6.0.0",
+    "@nwx/cfg": "^1.0.0",
+    "@nwx/logger": "^1.0.1",
+    "js-base64": "^2.4.3"
+  }
+}
