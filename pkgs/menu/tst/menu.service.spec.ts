@@ -138,7 +138,8 @@ describe('MenuService', () => {
         node => node.name === 'Subscriptions'
       );
       expect(subscriptions.length).toEqual(1);
-      expect(subscriptions[0].link).toBeTruthy('/admin/accounts/Subscriptions');
+      expect(subscriptions[0].link).toEqual('/admin/accounts/Subscriptions');
+      expect(subscriptions[0].fullspan).toEqual(true);
     })
   );
 
@@ -152,6 +153,18 @@ describe('MenuService', () => {
 
       const subscriptions = admin[0].children.filter(node => node.name === 'Settings');
       expect(subscriptions.length).toEqual(0);
+    })
+  );
+
+  it(
+    'should create menu with target set to _blank & external',
+    inject([MenuService], (service: MenuService) => {
+      service.setPermissionVerificationFunction(hasPermission);
+      const menuTree = service.buildMenuTree(DefaultMenuTree);
+      const admin = menuTree.children.filter(node => node.name === 'Youtube');
+      expect(admin).toBeTruthy();
+      expect(admin[0].target).toEqual('_blank');
+      expect(admin[0].external).toEqual(true);
     })
   );
 });
