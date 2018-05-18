@@ -8,8 +8,85 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
+import { MenuItem } from '../src/menu.types';
 import { MenuModule } from '../src/menu.module';
 import { MenuService } from '../src/menu.service';
+
+export const DefaultMenuTree: MenuItem[] = [
+  {
+    name: 'Admin',
+    icon: 'wrench',
+    permissions: [
+      'admin_root', // superuser
+      'admin_staff', // staff
+      'admin_finance', // finance
+      'admin_hr' // HR
+    ],
+    children: [
+      {
+        name: 'Accounts',
+        icon: 'account',
+        link: '/admin/accounts/profile'
+      },
+      {
+        name: 'Settings',
+        icon: 'account-card-details',
+        link: '/admin/accounts/settings',
+        fullspan: true,
+        permissions: ['admin_root', 'admin_staff', 'admin_hr']
+      },
+      {
+        name: 'Subscriptions',
+        icon: ' account-multiple-check',
+        link: '/admin/accounts/Subscriptions',
+        fullspan: true,
+        permissions: ['admin_root', 'admin_staff', 'admin_finance']
+      }
+    ]
+  },
+  {
+    name: 'Stocks',
+    icon: 'trending-up',
+    children: [
+      {
+        name: 'Sandbox Portfolio', // all users can simulate buy/sell stocks
+        icon: 'account-check',
+        link: '/finance/stocks/own'
+      },
+      {
+        name: 'Wishlist',
+        icon: 'playlist-check',
+        link: '/finance/stocks/wishlist',
+        disabled: true // feature disabled (feature not ready)
+      },
+      {
+        name: 'Portfolio', // paid users have real portfolio
+        icon: 'account-check',
+        link: '/finance/stocks/own',
+        permissions: ['group.subscriptions_level_1']
+      },
+      {
+        name: 'Trade', // paid users can trade
+        icon: ' home-currency-usd',
+        link: '/finance/stocks/trade',
+        permissions: ['group.subscriptions_level_1']
+      }
+    ]
+  },
+  {
+    name: 'Yahoo Finance',
+    icon: 'google-analytics',
+    link: 'https://yahoo.com',
+    external: true
+  },
+  {
+    name: 'Youtube',
+    icon: 'youtube',
+    link: 'https://youtube.com',
+    external: true,
+    target: '_blank'
+  }
+];
 
 describe('MenuService', () => {
   beforeEach(() => {
@@ -22,6 +99,15 @@ describe('MenuService', () => {
     'should be created',
     inject([MenuService], (service: MenuService) => {
       expect(service).toBeTruthy();
+    })
+  );
+
+  it(
+    'should create menu',
+    inject([MenuService], (service: MenuService) => {
+      const menuTree = service.buildMenuTree(DefaultMenuTree);
+      expect(menuTree.level).toEqual(0);
+      expect(menuTree.children[0].level).toEqual(1);
     })
   );
 });

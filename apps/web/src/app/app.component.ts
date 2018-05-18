@@ -42,7 +42,7 @@ export const DefaultMenuTree: MenuItem[] = [
     icon: 'trending-up',
     children: [
       {
-        name: 'Portfolio',
+        name: 'Sandbox Portfolio', // all users can simulate buy/sell stocks
         icon: 'account-check',
         link: '/finance/stocks/own'
       },
@@ -50,7 +50,19 @@ export const DefaultMenuTree: MenuItem[] = [
         name: 'Wishlist',
         icon: 'playlist-check',
         link: '/finance/stocks/wishlist',
-        disabled: true // feature disabled
+        disabled: true // feature disabled (feature not ready)
+      },
+      {
+        name: 'Portfolio', // paid users have real portfolio
+        icon: 'account-check',
+        link: '/finance/stocks/own',
+        permissions: ['group.subscriptions_level_1']
+      },
+      {
+        name: 'Trade', // paid users can trade
+        icon: ' home-currency-usd',
+        link: '/finance/stocks/trade',
+        permissions: ['group.subscriptions_level_1']
       }
     ]
   },
