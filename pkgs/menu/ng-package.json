@@ -1,8 +1,8 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../builds/nwx-jwt",
+  "dest": "../../builds/nwx-menu",
   "lib": {
-    "flatModuleFile": "nwx-jwt",
+    "flatModuleFile": "nwx-menu",
     "entryFile": "index.ts",
     "umdModuleIds": {}
   }
