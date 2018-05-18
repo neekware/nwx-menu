@@ -6,16 +6,16 @@
  * found in the LICENSE file at http://neekware.com/license/MIT.html
  */
 
-import { JwtModule } from '../src/jwt.module';
+import { MenuModule } from '../src/menu.module';
 
-describe('JwtModule', () => {
-  let jwtModule: JwtModule;
+describe('MenuModule', () => {
+  let menuModule: MenuModule;
 
   beforeEach(() => {
-    jwtModule = new JwtModule();
+    menuModule = new MenuModule();
   });
 
   it('should create an instance', () => {
-    expect(jwtModule).toBeTruthy();
+    expect(menuModule).toBeTruthy();
   });
 });

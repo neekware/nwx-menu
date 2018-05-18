@@ -6,15 +6,15 @@
  * found in the LICENSE file at http://neekware.com/license/MIT.html
  */
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { JwtService } from './jwt.service';
+import { MenuNode } from './menu.utils';
 
 /**
- * JWT module class
+ * Default Menu Tree (placeholder)
  */
-@NgModule({
-  imports: [CommonModule]
-})
-export class JwtModule {}
+export const DefaultMenuTree = [
+  {
+    name: 'Home',
+    icon: 'home',
+    link: '/'
+  }
+];

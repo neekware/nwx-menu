@@ -3,7 +3,79 @@ import { Component } from '@angular/core';
 import { CfgService, DefaultCfg } from '@nwx/cfg';
 import { LogService } from '@nwx/logger';
 
-import { JwtService } from 'pkgs/jwt';
+import { MenuService, MenuItem } from 'pkgs/menu';
+
+export const DefaultMenuTree: MenuItem[] = [
+  {
+    name: "Admin",
+    icon: 'wrench',
+    permissions: [
+      'admin_root',   // superuser
+      'admin_staff',  // staff
+      'admin_finance',// finance
+      'admin_hr'      // HR
+    ],
+    children: [
+      {
+        name: "Accounts",
+        icon: 'account',
+        link: '/admin/accounts/profile',
+      },
+      {
+        name: "Settings",
+        icon: 'account-card-details',
+        link: '/admin/accounts/settings',
+        fullspan: true,
+        permissions: [
+          'admin_root',
+          'admin_staff',
+          'admin_hr'
+        ],
+      },
+      {
+        name: "Subscriptions",
+        icon: ' account-multiple-check',
+        link: '/admin/accounts/Subscriptions',
+        fullspan: true,
+        permissions: [
+          'admin_root',
+          'admin_staff',
+          'admin_finance'
+        ],
+      }
+    ]
+  },
+  {
+    name: 'Stocks',
+    icon: 'trending-up',
+    children: [
+      {
+        name: 'Portfolio',
+        icon: 'account-check',
+        link: '/finance/stocks/own'
+      },
+      {
+        name: 'Wishlist',
+        icon: 'playlist-check',
+        link: '/finance/stocks/wishlist',
+        disabled: true // feature disabled
+      }
+    ]
+  },
+  {
+    name: 'Yahoo Finance',
+    icon: 'google-analytics',
+    link: 'https://yahoo.com',
+    external: true,
+  },
+  {
+    name: 'Youtube',
+    icon: 'youtube',
+    link: 'https://youtube.com',
+    external: true,
+    target: '_blank'
+  }
+];
 
 @Component({
   selector: 'app-root',
@@ -13,24 +85,12 @@ import { JwtService } from 'pkgs/jwt';
 export class AppComponent {
   title = 'Neekware';
   options = {};
-  constructor(public cfg: CfgService, public log: LogService, public jwt: JwtService) {
+  constructor(public cfg: CfgService, public log: LogService, public menu: MenuService) {
     this.title = this.cfg.options.appName;
     this.log.info('AppComponent loaded ...');
-    this.checkToken();
   }
 
-  validToken() {
-    // tslint:disable-next-line
-    return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJOZWVrd2FyZSBKV1QgQXV0aG9yaXR5ICIsImlhdCI6MjUyOTk0NzU2OSwiZXhwIjoyNTMyNjI1OTY5LCJhdWQiOiJ3d3cubmVla3dhcmUuY29tIiwic3ViIjoiMjIifQ.05FqKNyDJSGceqjUPF0DhI8lLsEYF_2mzHbEvP6MUu8';
-  }
-
-  checkToken() {
-    const payload = this.jwt.getPayload(this.validToken());
-    const isExpired = this.jwt.isExpired(payload);
-    if (!isExpired) {
-      const userId = payload.sub;
-      const nextRefresh = this.jwt.getRefreshTime(payload);
-      this.log.debug(`Token expires in ${nextRefresh * 1000} seconds`);
-    }
+  checkMenu() {
+    const menuTree = this.menu.buildMenuTree(DefaultMenuTree);
   }
 }

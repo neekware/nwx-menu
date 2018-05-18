@@ -6,12 +6,8 @@
  * found in the LICENSE file at http://neekware.com/license/MIT.html
  */
 
-/**
- * JWT config declaration
- */
-export class JwtCfg {
-  // http request round-trip in seconds
-  networkDelay?: number;
-  // refresh expired token up to leeway amount in seconds
-  expiryLeeway?: number;
-}
+import { NgModule } from '@angular/core';
+import { MenuService } from './menu.service';
+
+@NgModule({})
+export class MenuModule {}

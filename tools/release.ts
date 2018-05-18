@@ -6,7 +6,7 @@ import { resolve } from 'path';
 import * as program from 'commander';
 import { parse, SemVer } from 'semver';
 
-const projName = 'nwx-jwt';
+const projName = 'nwx-menu';
 const projDir = resolve(__dirname, '..');
 const porjPkgJson = require(path.join(projDir, 'package.json'));
 const moduleBuildPath = path.join(projDir, 'builds', projName);
@@ -57,7 +57,7 @@ async function buildPackage() {
     const cmd = `ng build --prod`;
     console.log(cmd);
     await execute(cmd).catch(error => {
-      console.log(`Failed to build @nwx/jwt ... ${error}`);
+      console.log(`Failed to build @nwx/menu ... ${error}`);
       return false;
     });
   }
@@ -111,9 +111,9 @@ async function main() {
 
 program
   .version('0.0.1', '-v, --version')
-  .option('-b, --build', 'Build @nwx/jwt')
-  .option('-p, --publish', 'Publish @nwx/jwt@latest')
-  .option('-d, --dev', 'Publish @nwx/jwt@dev')
+  .option('-b, --build', 'Build @nwx/menu')
+  .option('-p, --publish', 'Publish @nwx/menu@latest')
+  .option('-d, --dev', 'Publish @nwx/menu@dev')
   .parse(process.argv);
 
 main();
