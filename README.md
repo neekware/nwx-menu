@@ -1,9 +1,8 @@
+# Library was deprecated in favor of [`@fullerstack/ngx-menu`](https://github.com/neekware/fullerstack/tree/main/libs/ngx-menu)
+
 # @nwx/menu
 
 **A simple menu module for Angular applications**
-
-# Library was deprecated in favor of [`@fullerstack/ngx-menu`](https://github.com/neekware/fullerstack/tree/main/libs/ngx-menu)
-
 
 [![status-image]][status-link]
 [![version-image]][version-link]
